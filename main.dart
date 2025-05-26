@@ -1,122 +1,159 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const ReliefApp());
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: RegisterPage(),
+  ));
 }
 
-class ReliefApp extends StatelessWidget {
-  const ReliefApp({super.key});
-
+class RegisterPage extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'ReliefApp',
-      home: const LoginPage(),
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  final _nameController = TextEditingController();
+  final _usernameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+  final _addressController = TextEditingController();
+
+  String selectedRole = ''; // "depremzede" veya "yardimsever"
+
+  Widget roleButton(String text, String value) {
+    final isSelected = selectedRole == value;
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedRole = value;
+        });
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: isSelected ? Colors.teal[100] : Colors.white,
+          border: Border.all(color: Colors.black),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              isSelected ? Icons.check_box : Icons.check_box_outline_blank,
+              color: isSelected ? Colors.green : Colors.grey,
+            ),
+            SizedBox(width: 8),
+            Text(text),
+          ],
+        ),
+      ),
     );
   }
-}
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  Widget inputField(String label, TextEditingController controller, {bool obscure = false}) {
+    return TextField(
+      controller: controller,
+      obscureText: obscure,
+      decoration: InputDecoration(
+        label: Center(child: Text(label, textAlign: TextAlign.center)),
+        border: OutlineInputBorder(),
+      ),
+      textAlign: TextAlign.center,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset('assets/logo.png', height: 100),
-              const SizedBox(height: 24),
-              const Text(
-                'ReliefApp',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              const Text(
-                'HOŞGELDİNİZ',
-                style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1,
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            child: Column(              
+              children: [
+                SizedBox(height: 16),
+                CircleAvatar(
+                  radius: 28,
+                  backgroundColor: const Color.fromARGB(255, 161, 215, 202),
+                  child: Image.asset("assets/images/logo.png", width: 30, height: 30,)
                 ),
-              ),
-              const SizedBox(height: 32),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Kullanıcı Adı',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
+                SizedBox(height: 12),
+                Text(
+                  'ReliefApp',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 16),
+                Text(
+                  'HESAP OLUŞTURUN',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                Icon(Icons.info_outline, size: 28),
+                SizedBox(height: 24),
+
+                inputField("Ad Soyad", _nameController),
+                SizedBox(height: 12),
+                inputField("Kullanıcı adı", _usernameController),
+                SizedBox(height: 12),
+                inputField("E-Mail / Telefon Numarası", _emailController),
+                SizedBox(height: 12),
+                inputField("Şifre belirleyin", _passwordController, obscure: true),
+                SizedBox(height: 6),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "*Şifreniz en az bir büyük harf ve rakam içermelidir.",
+                        style: TextStyle(fontSize: 12),
+                      ),
+                      Text(
+                        "*Şifreniz en az 8 karakterden oluşmalıdır.",
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  labelText: 'Şifre',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
+                SizedBox(height: 8),
+                inputField("Şifrenizi doğrulayın", _confirmPasswordController, obscure: true),
+                SizedBox(height: 12),
+                inputField("Adres Bilgileri", _addressController),
+                SizedBox(height: 20),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    roleButton("Depremzede", "depremzede"),
+                    roleButton("Yardımsever", "yardimsever"),
+                  ],
                 ),
-              ),
-              const SizedBox(height: 24),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
+                SizedBox(height: 24),
+
+                ElevatedButton(
                   onPressed: () {
-                    // Giriş yap işlemi
+                    // Kayıt işlemi
                   },
                   style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    backgroundColor: const Color(0xFFB7D9D2), // pastel yeşil
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+                    minimumSize: Size(double.infinity, 50),
+                    backgroundColor: Colors.teal[300],
                   ),
-                  child: const Text(
-                    'Giriş Yap',
-                    style: TextStyle(color: Colors.black),
-                  ),
+                  child: Text('Kayıt Ol'),
                 ),
-              ),
-              const SizedBox(height: 16),
-              const Text("Hesabınız Yok mu?"),
-              const SizedBox(height: 8),
-              SizedBox(
-                width: double.infinity,
-                child: OutlinedButton(
+                SizedBox(height: 16),
+                TextButton(
                   onPressed: () {
-                    // Kayıt ol yönlendirme
+                    // Girişe yönlendirme
                   },
-                  style: OutlinedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    side: const BorderSide(color: Color(0xFFB7D9D2)),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: const Text(
-                    'Kayıt Ol',
-                    style: TextStyle(color: Colors.black),
+                  child: Text(
+                    'Zaten hesabınız var mı?',
+                    style: TextStyle(decoration: TextDecoration.underline),
                   ),
                 ),
-              ),
-              const SizedBox(height: 16),
-              TextButton(
-                onPressed: () {
-                  // Şifremi unuttum işlemi
-                },
-                child: const Text(
-                  'Şifremi Unuttum',
-                  style: TextStyle(decoration: TextDecoration.underline),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
