@@ -1,29 +1,32 @@
 # ReliefApp - Afet Yardım Uygulaması
+Afet sonrası yardım süreçlerini güvenli, hızlı ve anonim hâle getiren bir mobil platform.
+
 
 ## Amaç
 Bu proje, depremzedeler ve yardımseverler arasında **güvenli ve anonim bir şekilde ihtiyaç temelli bağış yapılmasını sağlayan** bir mobil uygulama geliştirmeyi amaçlamaktadır. Deprem sonrası mağdurların temel ihtiyaçlara hızla ulaşabilmesi kritik bir konudur. Mevcut sistemlerde iletişim ve gizlilik eksiklikleri yaşanmakta, yardım süreçleri karmaşık ve güvensiz olabilmektedir. **ReliefApp**, bu sorunlara çözüm sunarak hem depremzedelerin hem de bağışçıların süreci daha etkin yönetmesine yardımcı olacaktır.
 
-## Proje Hedefleri  
+## 📌 Proje Hedefleri
+
 - Afet sonrası yardım süreçlerini hızlandırmak  
-- Kullanıcı gizliliğini sağlamak  
+- Kullanıcı gizliliğini koruyarak güvenli iletişim sağlamak  
 - Toplumsal dayanışmayı artırmak  
-- Chatbot ve akıllı eşleştirme algoritmalarıyla süreci desteklemek
+- LLM (Large Language Model) destekli chatbot ile kullanıcı desteği sunmak  
+- Konum bazlı eşleştirme ile yerel yardım zincirleri oluşturmak
 
-## Yöntem
-Geliştireceğimiz mobil uygulama, kullanıcıların ihtiyaçlarını belirleyip ilan edebileceği ve yardımseverlerin bu ihtiyaçlara yanıt verebileceği bir platform sunacaktır. Sistemin temel özellikleri şunlardır:
 
-### 1️⃣ Anonim Bağış Mekanizması
-- Kullanıcılar (depremzedeler ve bağışçılar) birbirlerinin kimlik ve adres bilgilerini görmeden güvenli bir şekilde iletişim kurabilecektir.
+## ⚙️ Temel Özellikler
 
-### 2️⃣ Kategori Bazlı Talep Sistemi
-- Depremzedeler ihtiyaçlarını (battaniye, gıda, hijyen malzemeleri vb.) belirlenen kategoriler arasından seçerek listeleyebilecek.
-- Yardımseverler, kendi konumlarına veya tercihlerine göre belirli kategorilere destek sağlayabilecek.
+### 🔒 1. Anonim Bağış Mekanizması
+Depremzedeler ve bağışçılar birbirlerinin kimlik ve adres bilgilerini **görmeden** iletişim kurar.
 
-### 3️⃣ Konum Tabanlı Eşleştirme
-- İhtiyaç sahibi kendisine en yakın konumdaki bağışçı ile eşleştirilecektir.
+### 📦 2. Kategori Bazlı Talep Sistemi
+İhtiyaçlar önceden tanımlı kategorilere göre listelenir (ör. battaniye, hijyen, gıda vb.).
 
-### 4️⃣ Yapay Zeka Destekli Chatbot Entegrasyonu
-- Kullanıcıların sık sorulan sorulara hızlı yanıt almasını sağlayacak bir yapay zeka destekli chatbot geliştirilecektir.
+### 📍 3. Konum Tabanlı Eşleştirme
+İhtiyaç sahipleri, kendilerine **en yakın** bağışçılarla otomatik olarak eşleştirilir.
+
+### 🤖 4. Yapay Zeka Destekli Chatbot
+LLM tabanlı bir chatbot ile sık sorulan sorulara **anında ve doğal dilde yanıtlar** sağlanır.
 
 ## Takım Üyeleri ve Yetkinlikleri  
 | İsim              | Görevler                                      | Yetkinlikler                                       |
@@ -35,7 +38,7 @@ Geliştireceğimiz mobil uygulama, kullanıcıların ihtiyaçlarını belirleyip
 | Rojda            | LLM entegrasyonu, Flutter geliştirme           | Flutter, LLM, Firebase entegrasyonu                |
 | Asrın             | Flutter geliştirme                             | Flutter, UI/UX tasarım                              |
 
-## Kullanılan Yazılım / Donanım Teknolojileri  
+## Kullanılan Teknolojiler  
 - Flutter (mobil uygulama geliştirme)  
 - Firebase (veritabanı, kimlik doğrulama)  
 - Google Maps API (konum bazlı eşleştirme)  
@@ -56,6 +59,21 @@ Projemiz çevik (agile) yazılım geliştirme yaklaşımını benimsemektedir. H
 ## Dökümanlar
 [Proje Broşürü (PDF)](./documents/reliefapp_brosur.pdf), [Kullanım Kılavuzu v2.0 (PDF)](./documents/kullanim_kilavuzu_v2.pdf) gibi dökümanlara [documents](documents) klasörü üzerinden erişebilirsiniz.
 
-## Global Destek ve Çağrı
-🌍 Dünya genelindeki yazılımcıları, yatırımcıları ve bağışçıları ReliefApp projemize katkı sunmaya ve destek olmaya davet ediyoruz.  
-💪 Gelin, afet bölgelerine daha hızlı ve etkili yardım için teknolojiyi birlikte geliştirelim!
+## Global Destek ve Katkı Çağrısı
+
+ReliefApp açık kaynaklıdır ve gelişime açıktır. Aşağıdaki katkıları memnuniyetle karşılıyoruz:
+
+- 🧩 Kod katkısı (Pull Request)
+- 🐞 Hata bildirimleri (Issues)
+- 🌐 Çeviri desteği (çok dillilik için)
+- 📖 Dokümantasyon geliştirme
+- 💡 Yeni özellik önerileri
+
+## Destekçilere ve Yatırımcılara Çağrı
+
+> Daha hızlı, daha kapsayıcı ve daha akıllı bir yardım ağı için desteğinizi bekliyoruz.
+
+Desteklerle birlikte:
+- LLM sistemleri genişletilebilir
+- Sesli komut ve çoklu dil desteği eklenebilir
+- Mobil uygulama App Store / Play Store üzerinden yayınlanabilir
