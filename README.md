@@ -71,7 +71,7 @@ ReliefApp açık kaynaklıdır ve gelişime açıktır. Aşağıdaki katkıları
 
 ## Destekçilere ve Yatırımcılara Çağrı
 
-> Daha hızlı, daha kapsayıcı ve daha akıllı bir yardım ağı için desteğinizi bekliyoruz.
+Daha hızlı, daha kapsayıcı ve daha akıllı bir yardım ağı için desteğinizi bekliyoruz.
 
 Desteklerle birlikte:
 - LLM sistemleri genişletilebilir
