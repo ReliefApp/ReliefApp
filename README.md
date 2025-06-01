@@ -66,7 +66,6 @@ ReliefApp açık kaynaklıdır ve gelişime açıktır. Aşağıdaki katkıları
 - 🧩 Kod katkısı (Pull Request)
 - 🐞 Hata bildirimleri (Issues)
 - 🌐 Çeviri desteği (çok dillilik için)
-- 📖 Dokümantasyon geliştirme
 - 💡 Yeni özellik önerileri
 
 ## Destekçilere ve Yatırımcılara Çağrı
