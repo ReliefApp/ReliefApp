@@ -362,7 +362,6 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
   @override
   Widget build(BuildContext context) {
     int totalItems = widget.products.fold(0, (sum, item) => sum + (item['count'] as int));
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -384,17 +383,27 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
                     ),
                   ),
                   SizedBox(width: 12),
-                  Stack(
-                    alignment: Alignment.topRight,
-                    children: [
-                      Icon(Icons.shopping_basket_outlined, size: 28),
-                      if (totalItems > 0)
-                        CircleAvatar(
-                          radius: 8,
-                          backgroundColor: Colors.red,
-                          child: Text('$totalItems', style: TextStyle(fontSize: 10, color: Colors.white)),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CartPage(products: widget.products),
                         ),
-                    ],
+                      );
+                    },
+                    child: Stack(
+                      alignment: Alignment.topRight,
+                      children: [
+                        Icon(Icons.shopping_basket_outlined, size: 28),
+                        if (totalItems > 0)
+                          CircleAvatar(
+                            radius: 8,
+                            backgroundColor: Colors.red,
+                            child: Text('$totalItems', style: TextStyle(fontSize: 10, color: Colors.white)),
+                          ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -469,5 +478,234 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
         ),
       ),
     );
+  }
+}
+
+class CartPage extends StatefulWidget {
+  final List<Map<String, dynamic>> products;
+
+  CartPage({required this.products});
+
+  @override
+  _CartPageState createState() => _CartPageState();
+}
+
+class _CartPageState extends State<CartPage> {
+  void _increaseCount(Map<String, dynamic> product) {
+    setState(() {
+      product['count'] += 1;
+    });
+  }
+
+  void _decreaseCount(Map<String, dynamic> product) {
+    setState(() {
+      if (product['count'] > 0) {
+        product['count'] -= 1;
+      }
+    });
+  }
+
+  void _clearCart() {
+    setState(() {
+      for (var product in widget.products) {
+        product['count'] = 0;
+      }
+    });
+  }
+
+  void _confirmRequest() {
+    // Burada API’ye gönderim gibi işlemler yapılabilir.
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text("Talep Onaylandı"),
+        content: Text("Talebiniz başarıyla alındı."),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context); // dialog kapanır
+              Navigator.pop(context); // sepet sayfası kapanır
+            },
+            child: Text("Tamam"),
+          ),
+        ],
+      ),
+    );
+
+    _clearCart(); // Onaylandıktan sonra sepeti boşalt
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final cartItems = widget.products.where((p) => (p['count'] as int) > 0).toList();
+
+    return Scaffold(
+      appBar: AppBar(title: Text('Sepetim')),
+      body: cartItems.isEmpty
+          ? Center(child: Text('Sepetiniz boş'))
+          : Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: cartItems.length,
+                    itemBuilder: (context, index) {
+                      final product = cartItems[index];
+                      return ListTile(
+                        leading: SizedBox(width: 40, height: 40, child: product['icon']),
+                        title: Text(product['name']),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.remove),
+                              onPressed: () => _decreaseCount(product),
+                            ),
+                            Text('${product['count']}'),
+                            IconButton(
+                              icon: Icon(Icons.add),
+                              onPressed: () => _increaseCount(product),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: _clearCart,
+                          style: ElevatedButton.styleFrom(backgroundColor: Colors.grey),
+                          child: Text('Sepeti Boşalt'),
+                        ),
+                      ),
+                      SizedBox(width: 12),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: _confirmRequest,
+                          style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                          child: Text('Talebi Onayla'),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+    );
+  }
+}
+
+class CartPopupContent extends StatefulWidget {
+  final List<Map<String, dynamic>> products;
+
+  const CartPopupContent({required this.products});
+
+  @override
+  _CartPopupContentState createState() => _CartPopupContentState();
+}
+
+class _CartPopupContentState extends State<CartPopupContent> {
+  void _increaseCount(Map<String, dynamic> product) {
+    setState(() {
+      product['count'] += 1;
+    });
+  }
+
+  void _decreaseCount(Map<String, dynamic> product) {
+    setState(() {
+      if (product['count'] > 0) {
+        product['count'] -= 1;
+      }
+    });
+  }
+
+  void _clearCart() {
+    setState(() {
+      for (var product in widget.products) {
+        product['count'] = 0;
+      }
+    });
+  }
+
+  void _confirmRequest() {
+    Navigator.of(context).pop(); // önce popup kapansın
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text("Talep Onaylandı"),
+        content: Text("Talebiniz başarıyla alındı."),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text("Tamam"),
+          ),
+        ],
+      ),
+    );
+    _clearCart();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final cartItems = widget.products.where((p) => (p['count'] as int) > 0).toList();
+
+    return cartItems.isEmpty
+        ? Center(child: Text('Sepetiniz boş'))
+        : Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: cartItems.length,
+                  itemBuilder: (context, index) {
+                    final product = cartItems[index];
+                    return ListTile(
+                      leading: SizedBox(width: 40, height: 40, child: product['icon']),
+                      title: Text(product['name']),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.remove),
+                            onPressed: () => _decreaseCount(product),
+                          ),
+                          Text('${product['count']}'),
+                          IconButton(
+                            icon: Icon(Icons.add),
+                            onPressed: () => _increaseCount(product),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: _clearCart,
+                      style: ElevatedButton.styleFrom(backgroundColor: Colors.grey),
+                      child: Text('Sepeti Boşalt'),
+                    ),
+                  ),
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: _confirmRequest,
+                      style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                      child: Text('Talebi Onayla'),
+                      
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          );
   }
 }
